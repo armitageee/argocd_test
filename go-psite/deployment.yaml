@@ -2,18 +2,25 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: go-app
+  namespace: test-app
 spec:
-  replicas: 3
   selector:
     matchLabels:
       app: go-app
+  replicas: 3
   template:
     metadata:
       labels:
         app: go-app
     spec:
       containers:
-        - name: go-app-v1
-          image: wuwun9/go-app:1.0
+      - image: wuwun9/go-app:1.0
+        name: go-psite
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
         ports:
         - containerPort: 3000
